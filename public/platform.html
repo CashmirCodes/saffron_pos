@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Platform Admin &middot; Saffron POS</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" />
+<meta name="theme-color" content="#f7b733" />
+</head>
+<body>
+  <header class="platform-bar">
+    <div class="platform-brand">
+      <span class="sidebar-logo-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 12C12 8 10 5.2 6.5 4.2"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(120 12 12)"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(240 12 12)"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></span>
+      <div class="platform-brand-text"><strong>Saffron</strong><small>Platform admin</small></div>
+    </div>
+    <button type="button" class="btn btn-sm" id="logoutBtn">Log Out</button>
+  </header>
+
+  <main class="platform-main" id="content">
+    <div class="empty-state">Loading&hellip;</div>
+  </main>
+
+  <div id="toastHost" class="toast-host"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/platform.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

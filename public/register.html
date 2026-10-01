@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Set Up Your Company &middot; Saffron POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="theme-color" content="#f7b733" />
+</head>
+<body class="login-body">
+  <div class="login-bg-wrap"><canvas id="loginBgCanvas"></canvas></div>
+  <div class="login-card">
+    <div class="login-logo"><span class="login-logo-badge"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 12C12 8 10 5.2 6.5 4.2"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(120 12 12)"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(240 12 12)"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></span><span class="login-logo-text">Saffron<span>Point of Sale</span></span></div>
+    <form id="registerForm">
+      <label>Company Name
+        <input type="text" id="companyName" required autofocus placeholder="e.g. Acme Hardware" />
+      </label>
+      <label>Company Code (used to log in, letters/numbers only)
+        <input type="text" id="companyCode" placeholder="Auto-generated if left blank" />
+      </label>
+      <label>Your Full Name
+        <input type="text" id="fullName" required placeholder="e.g. Sai Ramirez" />
+      </label>
+      <label>Admin Username
+        <input type="text" id="username" autocomplete="username" required />
+      </label>
+      <label>Admin Password
+        <input type="password" id="password" autocomplete="new-password" required minlength="6" />
+      </label>
+      <button type="submit" class="btn btn-primary btn-block">Create Company</button>
+      <p id="registerError" class="error-text"></p>
+    </form>
+    <p class="login-hint" id="loggedInHint" hidden></p>
+    <p class="login-hint">Already set up? <a href="login.html">Sign in instead</a></p>
+  </div>
+
+  <script src="js/velaris-bg.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/pwa.js"></script>
+  <script>
+    initVelarisBackground(document.getElementById('loginBgCanvas'), {
+      bg: getComputedStyle(document.documentElement).getPropertyValue('--login-bg-deep'),
+      colors: [
+        getComputedStyle(document.documentElement).getPropertyValue('--primary'),
+        getComputedStyle(document.documentElement).getPropertyValue('--accent'),
+        getComputedStyle(document.documentElement).getPropertyValue('--glow-mid'),
+        getComputedStyle(document.documentElement).getPropertyValue('--login-glow-deep')
+      ],
+      speed: 0.6,
+      grain: 0.08
+    });
+
+    const form = document.getElementById('registerForm');
+    const errorEl = document.getElementById('registerError');
+
+    // Note: unlike login.html, we deliberately do NOT redirect away if
+    // already logged in -- an existing admin may want to spin up an
+    // additional, separate company right from here.
+    const existingUser = Api.getUser();
+    if (existingUser) {
+      const hint = document.getElementById('loggedInHint');
+      hint.hidden = false;
+      hint.textContent = `Note: you're currently signed in to "${existingUser.company?.name || 'a company'}". Creating a new company below will switch you into it.`;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.textContent = '';
+      const body = {
+        company_name: document.getElementById('companyName').value.trim(),
+        company_code: document.getElementById('companyCode').value.trim(),
+        admin_full_name: document.getElementById('fullName').value.trim(),
+        admin_username: document.getElementById('username').value.trim(),
+        admin_password: document.getElementById('password').value
+      };
+      try {
+        const data = await Api.registerCompany(body);
+        Api.setToken(data.token, data.user);
+        window.location.href = 'index.html';
+      } catch (err) {
+        errorEl.textContent = err.message || 'Could not create company.';
+      }
+    });
+  </script>
+</body>
+</html>

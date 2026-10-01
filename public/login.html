@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Sign In &middot; Saffron POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="theme-color" content="#f7b733" />
+</head>
+<body class="login-body">
+  <div class="login-bg-wrap"><canvas id="loginBgCanvas"></canvas></div>
+  <div class="login-card">
+    <div class="login-logo"><span class="login-logo-badge"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 12C12 8 10 5.2 6.5 4.2"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(120 12 12)"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(240 12 12)"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></span><span class="login-logo-text">Saffron<span>Point of Sale</span></span></div>
+    <form id="loginForm">
+      <label>Company Code
+        <input type="text" id="companyCode" autocomplete="organization" required autofocus placeholder="e.g. acme-hardware" />
+      </label>
+      <label>Username
+        <input type="text" id="username" autocomplete="username" required />
+      </label>
+      <label>Password
+        <input type="password" id="password" autocomplete="current-password" required />
+      </label>
+      <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      <p id="loginError" class="error-text"></p>
+    </form>
+  </div>
+
+  <script src="js/velaris-bg.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/pwa.js"></script>
+  <script>
+    initVelarisBackground(document.getElementById('loginBgCanvas'), {
+      bg: getComputedStyle(document.documentElement).getPropertyValue('--login-bg-deep'),
+      colors: [
+        getComputedStyle(document.documentElement).getPropertyValue('--primary'),
+        getComputedStyle(document.documentElement).getPropertyValue('--accent'),
+        getComputedStyle(document.documentElement).getPropertyValue('--glow-mid'),
+        getComputedStyle(document.documentElement).getPropertyValue('--login-glow-deep')
+      ],
+      speed: 0.6,
+      grain: 0.08
+    });
+
+    const form = document.getElementById('loginForm');
+    const errorEl = document.getElementById('loginError');
+
+    if (new URLSearchParams(location.search).has('paused')) {
+      errorEl.textContent = "This company's account is paused. Please contact Saffron support.";
+    }
+
+    const homeFor = (user) => (user && user.role === 'platform' ? 'platform.html' : 'index.html');
+    if (Api.getToken()) window.location.href = homeFor(Api.getUser());
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.textContent = '';
+      const companyCode = document.getElementById('companyCode').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      try {
+        const data = await Api.login(companyCode, username, password);
+        Api.setToken(data.token, data.user);
+        window.location.href = data.redirect || homeFor(data.user);
+      } catch (err) {
+        errorEl.textContent = err.message || 'Login failed.';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Saffron POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="theme-color" content="#f7b733" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Saffron" />
+</head>
+<body>
+  <div class="app-shell">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-logo"><span class="sidebar-logo-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 12C12 8 10 5.2 6.5 4.2"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(120 12 12)"/><path d="M12 12C12 8 10 5.2 6.5 4.2" transform="rotate(240 12 12)"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></span><span>Saffron</span><button type="button" id="sidebarClose" class="sidebar-close" aria-label="Close menu"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+      <button class="nav-item active" data-view="home"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg></span><span>Home</span></button>
+      <button class="nav-item" data-view="sale"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/></svg></span><span>Make a Sale</span></button>
+      <button class="nav-item" data-view="receive"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 12h4l2 3h4l2-3h4"/><path d="M4 12 6 4h12l2 8"/><path d="M4 12v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg></span><span>Receive Items</span></button>
+      <button class="nav-item" data-view="inventory"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span><span>Item List</span></button>
+      <button class="nav-item" data-view="customers"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span><span>Customer List</span></button>
+      <button class="nav-item" data-view="departments"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span><span>Department List</span></button>
+      <button class="nav-item" data-view="reports"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7"/><path d="M2 20h20"/></svg></span><span>Reports</span></button>
+      <button class="nav-item" data-view="eod"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg></span><span>End of Day</span></button>
+      <button class="nav-item" data-view="employees" data-admin-only="1"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><circle cx="17" cy="8.5" r="2.6"/><path d="M15.5 14.6c2.6.4 4.7 2.2 5 5.4"/></svg></span><span>Employees</span></button>
+      <button class="nav-item" data-view="settings" data-admin-only="1"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1c.6.5 1.3.9 2 1.2L10 21h4l.5-2.6c.7-.3 1.4-.7 2-1.2l2.4 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z"/></svg></span><span>Preferences</span></button>
+      <button class="nav-item" data-view="tools" data-admin-only="1"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l-1 3 3-1 5.3-5.3a4 4 0 0 1 5.4-5.4l-2.2 2.2 1 3 3 1 2.2-2.2a4 4 0 0 1-5.7-5.7Z"/></svg></span><span>Tools</span></button>
+      <div class="sidebar-spacer"></div>
+      <button id="logoutBtn" class="nav-item nav-item-logout"><span class="ni-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></span><span>Log Out</span></button>
+    </nav>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="main-col">
+      <header class="topbar">
+        <button id="navToggle" class="nav-toggle" aria-label="Open menu"><svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px;"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="topbar-search">
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="search" id="globalSearch" placeholder="Search items, customers&hellip;" aria-label="Search items and customers" enterkeyhint="search" autocomplete="off" />
+        </div>
+        <div class="topbar-right">
+          <span id="syncBadge" class="sync-badge" title="Online"><i class="sync-dot"></i><span class="sync-text">Online</span></span>
+          <span id="clock" class="clock"></span>
+          <div class="user-chip">
+            <div class="avatar" id="avatarInitial">A</div>
+            <div class="user-chip-text">
+              <strong id="userBadge">&nbsp;</strong>
+              <small id="storeName">My Store</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="content">
+        <!-- Views are rendered here by app.js -->
+      </main>
+    </div>
+
+    <nav class="bottom-tabs" id="bottomTabs">
+      <button class="tab-item active" data-view="home"><svg class="icon" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg><span>Home</span></button>
+      <button class="tab-item" data-view="sale"><svg class="icon" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/></svg><span>Sale</span></button>
+      <button class="tab-item" data-view="inventory"><svg class="icon" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg><span>Items</span></button>
+      <button class="tab-item" data-view="customers"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>Customers</span></button>
+      <button class="tab-item" id="tabMore" type="button"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>More</span></button>
+    </nav>
+  </div>
+
+  <div id="toastHost" class="toast-host"></div>
+
+  <!-- Camera barcode scanning (Scan buttons next to search boxes / the Add Item Barcode field) -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>
